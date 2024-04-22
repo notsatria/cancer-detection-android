@@ -12,25 +12,33 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
 import com.dicoding.asclepius.R
 import com.dicoding.asclepius.databinding.ActivityMainBinding
+import com.dicoding.asclepius.helper.ImageClassifierHelper
 import com.yalantis.ucrop.UCrop
+import org.tensorflow.lite.task.vision.classifier.Classifications
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var imageClassifierHelper: ImageClassifierHelper
 
     private var currentImageUri: Uri? = null
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
-        val outputUri = File(filesDir, "croppedImage.jpg").toUri()
+        if (uri != null) {
+            currentImageUri = uri
+            val outputUri = File(filesDir, "croppedImage.jpg").toUri()
 
-        val listUri = listOf<Uri>(uri!!, outputUri)
+            val listUri = listOf<Uri>(uri!!, outputUri)
 
-        launcherUCrop.launch(listUri)
+            launcherUCrop.launch(listUri)
+        } else {
+            showToast(getString(R.string.image_not_found))
+        }
     }
 
-    private val uCropContract = object: ActivityResultContract<List<Uri>, Uri>() {
+    private val uCropContract = object : ActivityResultContract<List<Uri>, Uri>() {
         override fun createIntent(context: Context, input: List<Uri>): Intent {
             val inputUri = input[0]
             val outputUri = input[1]
@@ -41,14 +49,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun parseResult(resultCode: Int, intent: Intent?): Uri {
+            if (intent == null) {
+                return currentImageUri!!
+            }
             return UCrop.getOutput(intent!!)!!
         }
 
     }
 
-    private val launcherUCrop = registerForActivityResult(uCropContract) { uri: Uri ->
-        currentImageUri = uri
-        showImage()
+    private val launcherUCrop = registerForActivityResult(uCropContract) { uri: Uri? ->
+        if (uri != null) {
+            currentImageUri = uri
+            showImage(currentImageUri)
+        } else {
+            showToast(getString(R.string.something_went_wrong))
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,14 +90,26 @@ class MainActivity : AppCompatActivity() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
-    private fun showImage() {
-        currentImageUri?.let { uri ->
-            binding.previewImageView.setImageURI(uri)
-        }
+    private fun showImage(imageUri: Uri?) {
+        if (imageUri == null) return
+        binding.previewImageView.setImageURI(imageUri)
     }
 
     private fun analyzeImage() {
-        // TODO: Menganalisa gambar yang berhasil ditampilkan.
+        imageClassifierHelper = ImageClassifierHelper(
+            context = this,
+            classifierListener = object : ImageClassifierHelper.ClassifierListener {
+                override fun onError(error: String) {
+                    showToast(error)
+                }
+
+                override fun onResults(result: List<Classifications>?) {
+                    if (result != null) {
+                        moveToResult()
+                    }
+                }
+            }
+        )
     }
 
     private fun moveToResult() {

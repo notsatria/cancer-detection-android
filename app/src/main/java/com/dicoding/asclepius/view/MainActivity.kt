@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContract
@@ -29,9 +30,7 @@ class MainActivity : AppCompatActivity() {
         if (uri != null) {
             currentImageUri = uri
             val outputUri = File(filesDir, "croppedImage.jpg").toUri()
-
-            val listUri = listOf<Uri>(uri!!, outputUri)
-
+            val listUri = listOf<Uri>(uri, outputUri)
             launcherUCrop.launch(listUri)
         } else {
             showToast(getString(R.string.image_not_found))
@@ -49,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun parseResult(resultCode: Int, intent: Intent?): Uri {
+            Log.e("UCrop", "resultCode: $resultCode")
             if (intent == null) {
                 return currentImageUri!!
             }
@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
 
     private val launcherUCrop = registerForActivityResult(uCropContract) { uri: Uri? ->
         if (uri != null) {
-            currentImageUri = uri
             showImage(currentImageUri)
         } else {
             showToast(getString(R.string.something_went_wrong))
@@ -91,7 +90,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showImage(imageUri: Uri?) {
-        if (imageUri == null) return
         binding.previewImageView.setImageURI(imageUri)
     }
 

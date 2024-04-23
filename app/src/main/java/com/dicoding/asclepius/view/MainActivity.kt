@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContract
@@ -21,14 +22,12 @@ import java.io.File
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var imageClassifierHelper: ImageClassifierHelper
-
     private var currentImageUri: Uri? = null
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         if (uri != null) {
-            currentImageUri = uri
             val outputUri = File(filesDir, "croppedImage.jpg").toUri()
             val listUri = listOf<Uri>(uri, outputUri)
             launcherUCrop.launch(listUri)
@@ -42,6 +41,8 @@ class MainActivity : AppCompatActivity() {
             val inputUri = input[0]
             val outputUri = input[1]
 
+            currentImageUri = outputUri
+
             val uCrop = UCrop.of(inputUri, outputUri)
 
             return uCrop.getIntent(context)
@@ -49,9 +50,11 @@ class MainActivity : AppCompatActivity() {
 
         override fun parseResult(resultCode: Int, intent: Intent?): Uri {
             Log.e("UCrop", "resultCode: $resultCode")
+
             if (intent == null) {
                 return currentImageUri!!
             }
+
             return UCrop.getOutput(intent!!)!!
         }
 
@@ -94,20 +97,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun analyzeImage() {
+        showLoading(true)
         imageClassifierHelper = ImageClassifierHelper(
             context = this,
             classifierListener = object : ImageClassifierHelper.ClassifierListener {
                 override fun onError(error: String) {
-                    showToast(error)
+                    runOnUiThread {
+                        showLoading(false)
+                        showToast(error)
+                    }
                 }
 
                 override fun onResults(result: List<Classifications>?) {
+                    showLoading(false)
+                    Log.d(TAG, "onResults: $result")
                     if (result != null) {
                         moveToResult()
                     }
                 }
             }
         )
+
+        if (currentImageUri == null) {
+            showToast(getString(R.string.image_not_found))
+            return
+        }
+
+        imageClassifierHelper.classifyStaticImage(currentImageUri!!)
+
     }
 
     private fun moveToResult() {
@@ -117,5 +134,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
     }
 }

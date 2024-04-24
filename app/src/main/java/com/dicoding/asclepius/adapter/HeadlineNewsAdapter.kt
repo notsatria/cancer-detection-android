@@ -7,16 +7,17 @@ import com.bumptech.glide.Glide
 import com.dicoding.asclepius.data.response.HealthCancerNewsResponse
 import com.dicoding.asclepius.databinding.CardNewsItemBinding
 
-class HeadlineNewsAdapter(private val list: List<HealthCancerNewsResponse.ArticlesItem>) : RecyclerView.Adapter<HeadlineNewsAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: CardNewsItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class HeadlineNewsAdapter(private val list: List<HealthCancerNewsResponse.ArticlesItem>) :
+    RecyclerView.Adapter<HeadlineNewsAdapter.ViewHolder>() {
 
-    }
+    inner class ViewHolder(val binding: CardNewsItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): HeadlineNewsAdapter.ViewHolder {
-        val binding = CardNewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            CardNewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

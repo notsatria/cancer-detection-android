@@ -8,4 +8,8 @@
     <string name="image_not_found">Gambar tidak ditemukan</string>
     <string name="image_classifier_failed">Image classifier gagal diinisialisasi</string>
     <string name="something_went_wrong">Terjadi kesalahan</string>
+    <string name="news_card">News Card</string>
+    <string name="title">title</string>
+    <string name="description">description</string>
+    <string name="date">12 Aug 2022</string>
 </resources>

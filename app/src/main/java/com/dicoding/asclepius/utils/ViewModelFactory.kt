@@ -1,5 +1,6 @@
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.dicoding.asclepius.data.di.Injection
 import com.dicoding.asclepius.data.repository.HeadlineNewsRepository
 import com.dicoding.asclepius.viewmodel.DashboardViewModel
 
@@ -10,7 +11,6 @@ class ViewModelFactory private constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
             DashboardViewModel::class.java -> DashboardViewModel(repository) as T
-            // Add more view models here as needed
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }
@@ -19,9 +19,9 @@ class ViewModelFactory private constructor(
         @Volatile
         private var INSTANCE: ViewModelFactory? = null
 
-        fun getInstance(repository: HeadlineNewsRepository): ViewModelFactory {
+        fun getInstance(): ViewModelFactory {
             return INSTANCE ?: synchronized(this) {
-                ViewModelFactory(repository).also { INSTANCE = it }
+                ViewModelFactory(Injection.provideHeadlineNewsRepository()).also { INSTANCE = it }
             }
         }
     }

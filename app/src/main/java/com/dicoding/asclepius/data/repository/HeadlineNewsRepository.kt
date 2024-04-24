@@ -1,10 +1,12 @@
 package com.dicoding.asclepius.data.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.dicoding.asclepius.data.response.HealthCancerNewsResponse
 import com.dicoding.asclepius.data.retrofit.ApiService
 import com.dicoding.asclepius.data.Result
+import com.dicoding.asclepius.data.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,14 +16,14 @@ class HeadlineNewsRepository private constructor(
 ) {
     private val result = MediatorLiveData<Result<HealthCancerNewsResponse>>()
 
-    fun getTopHeadlines() {
+    fun getTopHeadlines(): LiveData<Result<HealthCancerNewsResponse>> {
         result.value = Result.Loading
         val client =
             apiService.getTopHeadlines(
                 "cancer",
                 "health",
                 "en",
-                "a1b3052e1474485597eeb31de44e93ea"
+                ApiConfig.API_KEY
             )
 
         client.enqueue(object : Callback<HealthCancerNewsResponse> {
@@ -30,7 +32,10 @@ class HeadlineNewsRepository private constructor(
                 response: Response<HealthCancerNewsResponse>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("HeadlineNewsRepository", "onResponse: ${response.body()}");
+                    if (response.body()?.totalResults == null) {
+                        result.value = Result.Empty("No data found")
+                    }
+                    result.value = response.body()?.let { Result.Success(it) }
                 } else {
                     result.value = Result.Error(response.message())
                 }
@@ -41,6 +46,8 @@ class HeadlineNewsRepository private constructor(
             }
 
         })
+
+        return result
     }
 
     companion object {

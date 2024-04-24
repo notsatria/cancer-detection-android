@@ -25,10 +25,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "API_KEY", "\"a1b3052e1474485597eeb31de44e93ea\"")
-        }
-        debug {
-            buildConfigField("String", "API_KEY", "\"a1b3052e1474485597eeb31de44e93ea\"")
         }
     }
     compileOptions {
@@ -61,4 +57,10 @@ dependencies {
     implementation("org.tensorflow:tensorflow-lite-support:$tfLiteVersion")
     implementation("org.tensorflow:tensorflow-lite-metadata:$tfLiteVersion")
     implementation("org.tensorflow:tensorflow-lite-task-vision:$tfLiteVersion")
+
+    // Retrofit
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 }

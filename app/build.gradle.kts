@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -24,6 +25,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "API_KEY", "\"a1b3052e1474485597eeb31de44e93ea\"")
+        }
+        debug {
+            buildConfigField("String", "API_KEY", "\"a1b3052e1474485597eeb31de44e93ea\"")
         }
     }
     compileOptions {
@@ -40,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.activity:activity:1.8.0")
     val tfLiteVersion = "0.4.4"
 
     implementation("androidx.core:core-ktx:1.12.0")
@@ -55,7 +61,4 @@ dependencies {
     implementation("org.tensorflow:tensorflow-lite-support:$tfLiteVersion")
     implementation("org.tensorflow:tensorflow-lite-metadata:$tfLiteVersion")
     implementation("org.tensorflow:tensorflow-lite-task-vision:$tfLiteVersion")
-
-    // uCrop
-    implementation("com.github.yalantis:ucrop:2.2.8-native")
 }

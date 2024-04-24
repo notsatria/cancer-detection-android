@@ -10,10 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven ("https://www.jitpack.io")
     }
 }
 
 rootProject.name = "Asclepius"
 include(":app")
-include(":ucrop")

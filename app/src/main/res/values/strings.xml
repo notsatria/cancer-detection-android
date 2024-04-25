@@ -17,4 +17,7 @@
     <string name="scan_cancer">Scan Cancer</string>
     <string name="back">Kembali</string>
     <string name="save_result">Simpan Hasil</string>
+    <string name="save_result_success">Berhasil menyimpan hasil</string>
+    <string name="classification_history">Riwayat Klasifikasi</string>
+    <string name="history">History</string>
 </resources>

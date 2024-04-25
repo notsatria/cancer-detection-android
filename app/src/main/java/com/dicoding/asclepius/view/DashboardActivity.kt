@@ -3,6 +3,8 @@ package com.dicoding.asclepius.view
 import ViewModelFactory
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -30,8 +32,27 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.actionbar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.actionHistory -> {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun moveToClassificationHistoryActivity() {
+        val intent = Intent(this, ClassificationHistoryActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun initViewModel() {
-        val factory: ViewModelFactory = ViewModelFactory.getInstance()
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(context = this)
         viewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
     }
 

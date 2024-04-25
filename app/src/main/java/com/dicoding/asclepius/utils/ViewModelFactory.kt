@@ -24,11 +24,11 @@ class ViewModelFactory private constructor(
         @Volatile
         private var INSTANCE: ViewModelFactory? = null
 
-        fun getInstance(context: Context? = null): ViewModelFactory {
+        fun getInstance(context: Context): ViewModelFactory {
             return INSTANCE ?: synchronized(this) {
                 ViewModelFactory(
                     Injection.provideHeadlineNewsRepository(),
-                    Injection.provideCancerClassificationResultRepository(context!!)
+                    Injection.provideCancerClassificationResultRepository(context)
                 ).also { INSTANCE = it }
             }
         }

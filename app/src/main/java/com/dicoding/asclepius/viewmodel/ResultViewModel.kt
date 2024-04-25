@@ -10,7 +10,7 @@ class ResultViewModel(private val repository: CancerClassificationResultReposito
     fun insertResult(resultString: String, imageUri: Uri) {
         val entity = CancerClassificationEntity(
             resultString = resultString,
-            imageUri = imageUri,
+            imageUri = imageUri.toString(),
             createdAt = DateUtil.getCurrentDate()
         )
         repository.insertResult(entity)

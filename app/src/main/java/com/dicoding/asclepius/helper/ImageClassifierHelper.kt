@@ -27,6 +27,7 @@ class ImageClassifierHelper(
     val classifierListener: ClassifierListener?
 ) {
     private var imageClassifer: ImageClassifier? = null
+
     init {
         setupImageClassifier()
     }
@@ -68,7 +69,8 @@ class ImageClassifierHelper(
         classifierListener?.onResults(results)
     }
 
-    private fun toBitmap(imageUri: Uri): Bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
+    private fun toBitmap(imageUri: Uri): Bitmap =
+        MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
 
     interface ClassifierListener {
         fun onError(error: String)

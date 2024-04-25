@@ -18,7 +18,7 @@ data class CancerClassificationEntity(
     val resultString: String,
 
     @ColumnInfo(name = "image_uri")
-    val imageUri: Uri,
+    val imageUri: String,
 
     @ColumnInfo(name = "created_at")
     val createdAt: String,

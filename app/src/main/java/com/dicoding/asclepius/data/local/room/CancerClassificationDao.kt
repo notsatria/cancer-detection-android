@@ -1,5 +1,6 @@
 package com.dicoding.asclepius.data.local.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -12,5 +13,5 @@ interface CancerClassificationDao {
     fun insertResult(entity: CancerClassificationEntity)
 
     @Query("SELECT * FROM classification_result")
-    fun getAllResult()
+    fun getAllResult(): LiveData<List<CancerClassificationEntity>>
 }

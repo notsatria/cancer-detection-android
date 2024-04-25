@@ -37,6 +37,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/md_theme_light_secondary"
         android:text="@string/gallery"
         app:layout_constraintBottom_toTopOf="@+id/analyzeButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,10 +46,11 @@
     <Button
         android:id="@+id/analyzeButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/md_theme_light_secondary"
         android:text="@string/analyze"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,11 +61,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

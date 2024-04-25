@@ -15,8 +15,8 @@ object DateUtil {
 
     @SuppressLint("SimpleDateFormat")
     fun getCurrentDate(): String {
-        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-        val currentDate = sdf.format(Date())
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+        val currentDate = inputFormat.format(Date())
         return currentDate
     }
 }

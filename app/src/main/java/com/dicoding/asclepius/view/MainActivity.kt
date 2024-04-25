@@ -80,6 +80,10 @@ class MainActivity : AppCompatActivity() {
                     val resultString = sortedCategories.joinToString("\n") {
                         "${it.label} " + NumberFormat.getPercentInstance().format(it.score)
                     }
+                    baseContext.contentResolver.takePersistableUriPermission(
+                        currentImageUri!!,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    )
                     val classificationResult = ClassificationResult(currentImageUri!!, resultString)
                     moveToResult(classificationResult)
                 }

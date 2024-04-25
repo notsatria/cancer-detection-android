@@ -7,27 +7,29 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="12dp"
     android:layout_marginBottom="8dp"
-    android:contentDescription="@string/result_card"
-    app:contentPadding="10dp"
-    app:layout_constraintTop_toTopOf="parent">
+    android:clickable="true"
+    android:contentDescription="@string/news_card"
+    android:focusable="true"
+    app:contentPadding="10dp">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvNews"
+            android:id="@+id/cvResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/ivNews"
-                android:layout_width="120dp"
+                android:id="@+id/ivResult"
+                android:layout_width="130dp"
                 android:layout_height="120dp"
                 android:scaleType="centerCrop"
                 tools:src="@drawable/ic_place_holder" />
@@ -40,11 +42,11 @@
             android:layout_marginStart="14dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cvNews"
+            app:layout_constraintStart_toEndOf="@id/cvResult"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tvNewsTitle"
+                android:id="@+id/tvResultTitle"
                 style="@style/Nunito.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,7 +56,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/tvNewsDescription"
+                android:id="@+id/tvResultDesc"
                 style="@style/Nunito"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,7 +67,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tvNewsDate"
+                android:id="@+id/tvResultDate"
                 style="@style/Poppins"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

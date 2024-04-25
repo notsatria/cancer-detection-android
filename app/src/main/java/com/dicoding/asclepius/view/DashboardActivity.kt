@@ -1,12 +1,17 @@
 package com.dicoding.asclepius.view
 
 import ViewModelFactory
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.asclepius.R
@@ -23,7 +28,18 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.title = getString(R.string.headline_news)
+        supportActionBar?.apply {
+            title = getString(R.string.headline_news)
+            elevation = 0f
+            setBackgroundDrawable(
+                ColorDrawable(
+                    ContextCompat.getColor(
+                        this@DashboardActivity,
+                        R.color.md_theme_light_background
+                    )
+                )
+            )
+        }
         initViewModel()
         getHeadlineNews()
 
@@ -34,13 +50,16 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.actionbar_menu, menu)
+        val menuItem = menu?.findItem(R.id.actionHistory)
+
+        menuItem?.icon?.setTint(ContextCompat.getColor(this, R.color.seed))
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.actionHistory -> {
-
+                moveToClassificationHistoryActivity()
             }
         }
         return super.onOptionsItemSelected(item)

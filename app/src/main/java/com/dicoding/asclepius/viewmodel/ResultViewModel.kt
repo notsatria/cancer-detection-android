@@ -15,6 +15,4 @@ class ResultViewModel(private val repository: CancerClassificationResultReposito
         )
         repository.insertResult(entity)
     }
-
-    fun getAllResults() = repository.getAllResult()
 }

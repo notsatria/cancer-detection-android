@@ -20,4 +20,6 @@
     <string name="save_result_success">Berhasil menyimpan hasil</string>
     <string name="classification_history">Riwayat Klasifikasi</string>
     <string name="history">History</string>
+    <string name="result_card">Result Card</string>
+    <string name="no_history">Data history masih kosong</string>
 </resources>

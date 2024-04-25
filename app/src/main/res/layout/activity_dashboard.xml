@@ -67,6 +67,7 @@
         android:layout_margin="16dp"
         android:contentDescription="@string/scan_cancer"
         android:text="@string/scan_cancer"
+        android:backgroundTint="@color/md_theme_light_background"
         app:icon="@drawable/ic_camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

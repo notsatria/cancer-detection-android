@@ -65,6 +65,13 @@ class DashboardActivity : AppCompatActivity() {
         rvNews.adapter = adapter
         rvNews.layoutManager = LinearLayoutManager(this)
         rvNews.setHasFixedSize(true)
+
+        adapter.setOnItemCallback(object : HeadlineNewsAdapter.OnItemCallback {
+            override fun onItemClicked(url: String) {
+                moveToWebViewWithUrl(url)
+            }
+
+        })
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -79,5 +86,13 @@ class DashboardActivity : AppCompatActivity() {
         } else if (result is Result.Error) {
             binding.ivError.setImageResource(R.drawable.error)
         }
+    }
+
+    private fun moveToWebViewWithUrl(url: String) {
+        val intent = Intent(this, WebViewActivity::class.java).apply {
+            putExtra(WebViewActivity.EXTRA_URL, url)
+        }
+
+        startActivity(intent)
     }
 }

@@ -11,6 +11,8 @@ import com.dicoding.asclepius.utils.Formatter
 class HeadlineNewsAdapter(private val list: List<HealthCancerNewsResponse.ArticlesItem>) :
     RecyclerView.Adapter<HeadlineNewsAdapter.ViewHolder>() {
 
+    private lateinit var onItemCallback: OnItemCallback
+
     inner class ViewHolder(val binding: CardNewsItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
@@ -34,9 +36,22 @@ class HeadlineNewsAdapter(private val list: List<HealthCancerNewsResponse.Articl
                 Glide.with(holder.itemView.context)
                     .load(urlToImage)
                     .into(binding.ivNews)
+
+                holder.itemView.setOnClickListener {
+                    onItemCallback.onItemClicked(url!!)
+                }
             }
+
         }
     }
 
     override fun getItemCount(): Int = list.size
+
+    fun setOnItemCallback(onItemCallback: OnItemCallback) {
+        this.onItemCallback = onItemCallback
+    }
+
+    interface OnItemCallback {
+        fun onItemClicked(url: String)
+    }
 }

@@ -1,6 +1,7 @@
 package com.dicoding.asclepius.view
 
 import ViewModelFactory
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -20,8 +21,13 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.title = getString(R.string.headline_news)
         initViewModel()
         getHeadlineNews()
+
+        binding.fabScanCancer.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
 
     private fun initViewModel() {
@@ -39,10 +45,14 @@ class DashboardActivity : AppCompatActivity() {
                         @Suppress("UNCHECKED_CAST")
                         showHeadlineNews(result.data.articles as List<HealthCancerNewsResponse.ArticlesItem>)
                     }
+
                     is Result.Error -> showError(result, result.error)
                     is Result.Empty -> showError(result, result.emptyError)
                     else -> {
-                        showError(Result.Empty(getString(R.string.something_went_wrong)), getString(R.string.something_went_wrong))
+                        showError(
+                            Result.Empty(getString(R.string.something_went_wrong)),
+                            getString(R.string.something_went_wrong)
+                        )
                     }
                 }
             }

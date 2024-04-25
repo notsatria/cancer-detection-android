@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.asclepius.data.response.HealthCancerNewsResponse
 import com.dicoding.asclepius.databinding.CardNewsItemBinding
+import com.dicoding.asclepius.utils.Formatter
 
 class HeadlineNewsAdapter(private val list: List<HealthCancerNewsResponse.ArticlesItem>) :
     RecyclerView.Adapter<HeadlineNewsAdapter.ViewHolder>() {
@@ -29,7 +30,7 @@ class HeadlineNewsAdapter(private val list: List<HealthCancerNewsResponse.Articl
             with(list[position]) {
                 binding.tvNewsTitle.text = title
                 binding.tvNewsDescription.text = description
-                binding.tvNewsDate.text = publishedAt
+                binding.tvNewsDate.text = Formatter.formatNewsDate(publishedAt!!)
                 Glide.with(holder.itemView.context)
                     .load(urlToImage)
                     .into(binding.ivNews)

@@ -13,4 +13,6 @@
     <string name="description">description</string>
     <string name="date">12 Aug 2022</string>
     <string name="no_internet">Tidak ada jaringan</string>
+    <string name="headline_news">Headline News</string>
+    <string name="scan_cancer">Scan Cancer</string>
 </resources>

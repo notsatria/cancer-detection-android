@@ -20,8 +20,14 @@ class ResultActivity : AppCompatActivity() {
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.hide()
+
         getDataFromIntent()
         showResults()
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     @Suppress("DEPRECATION")

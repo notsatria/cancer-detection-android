@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        supportActionBar?.hide()
+
         initUI()
     }
 

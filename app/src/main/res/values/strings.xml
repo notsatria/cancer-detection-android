@@ -15,4 +15,6 @@
     <string name="no_internet">Tidak ada jaringan</string>
     <string name="headline_news">Headline News</string>
     <string name="scan_cancer">Scan Cancer</string>
+    <string name="back">Kembali</string>
+    <string name="save_result">Simpan Hasil</string>
 </resources>

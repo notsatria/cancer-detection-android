@@ -1,7 +1,9 @@
 package com.dicoding.asclepius.adapter
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -34,9 +36,13 @@ class ClassificationHistoryAdapter(private val list: List<CancerClassificationEn
     override fun onBindViewHolder(holder: ClassificationHistoryAdapter.ViewHolder, position: Int) {
         with(holder) {
             with(list[position]) {
-                val imageUri = Uri.parse(imageUri)
-                binding.ivResult.setImageURI(imageUri)
-                binding.tvResultTitle.text = "Result $id"
+                val resolver = holder.itemView.context.contentResolver
+                val uri = Uri.parse(imageUri)
+                val bitmap = resolver.openInputStream(uri)?.use {
+                    BitmapFactory.decodeStream(it)
+                }
+                binding.ivResult.setImageBitmap(bitmap)
+                binding.tvResultTitle.text = "Hasil $id"
                 binding.tvResultDesc.text = resultString
                 binding.tvResultDate.text = DateUtil.formatNewsDate(createdAt)
             }

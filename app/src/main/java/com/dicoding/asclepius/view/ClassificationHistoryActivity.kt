@@ -1,6 +1,7 @@
 package com.dicoding.asclepius.view
 
 import ViewModelFactory
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
@@ -42,6 +43,7 @@ class ClassificationHistoryActivity : AppCompatActivity() {
                 )
             )
         }
+
         initViewModel()
 
         viewModel.getAllResults().observe(this) {

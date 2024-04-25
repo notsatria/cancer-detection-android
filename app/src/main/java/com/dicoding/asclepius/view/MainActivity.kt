@@ -1,14 +1,20 @@
 package com.dicoding.asclepius.view
 
+import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentResolverCompat
 import com.dicoding.asclepius.R
 import com.dicoding.asclepius.databinding.ActivityMainBinding
 import com.dicoding.asclepius.helper.ImageClassifierHelper
@@ -54,7 +60,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startGallery() {
-        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        launcherGallery.launch(
+            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+        )
     }
 
     private fun showImage() {
@@ -77,12 +85,13 @@ class MainActivity : AppCompatActivity() {
                     showLoading(false)
                     Log.d(TAG, "onResults: $result")
                     val sortedCategories = result!![0].categories.sortedByDescending { it.score }
-                    val resultString = sortedCategories.joinToString("\n") {
-                        "${it.label} " + NumberFormat.getPercentInstance().format(it.score)
-                    }
-                    baseContext.contentResolver.takePersistableUriPermission(
+                    val resultString =
+                        sortedCategories[0].label + " " + NumberFormat.getPercentInstance()
+                            .format(sortedCategories[0].score)
+                    val flag = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    this@MainActivity.contentResolver.takePersistableUriPermission(
                         currentImageUri!!,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        flag
                     )
                     val classificationResult = ClassificationResult(currentImageUri!!, resultString)
                     moveToResult(classificationResult)
